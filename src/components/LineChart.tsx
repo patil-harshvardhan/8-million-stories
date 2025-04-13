@@ -78,10 +78,14 @@ const LineChartWithAnnotations = () => {
   };
 
   const chartOptions: ApexCharts.ApexOptions = {
+    theme: {
+        mode: "dark",
+    },
+    
     chart: {
       height: 350,
       type: "line",
-      foreColor: "#ccc",
+      background: "transparent",
       toolbar: {
         show: false,
       },
@@ -115,6 +119,9 @@ const LineChartWithAnnotations = () => {
       size: 0,
     },
     xaxis: {
+      axisTicks: {
+        show: false,
+      },
       categories: [
         "05",
         "06",
@@ -156,44 +163,33 @@ const LineChartWithAnnotations = () => {
       ],
       title: {
         text: "Month",
-        style: {
-          color: "#ccc",
-        },
       },
-      labels: {
-        style: {
-          colors: "#ccc",
-        },
-      },
+      axisBorder:{
+        show: false
+      }
     },
     yaxis: {
       title: {
         text: "Query Count",
-        style: {
-          color: "#ccc",
-        },
       },
       min: 0,
       max: 45,
       tickAmount: 9,
-      labels: {
-        style: {
-          colors: "#ccc",
-        },
-      },
+      axisBorder: {
+        show : false,
+      }
     },
     legend: {
       position: "bottom",
       horizontalAlign: "center",
-      labels: {
-        colors: "#ccc",
-      },
+      markers: {
+        shape:"square",
+      }
     },
     title: {
       text: "Query - By Month",
       align: "left",
       style: {
-        color: "#ccc",
         fontSize: "20px",
       },
     },
