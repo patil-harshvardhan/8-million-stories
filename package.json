@@ -2,6 +2,7 @@
   "name": "8_million_stories",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://patil-harshvardhan.github.io/8-million-stories/",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
