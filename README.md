@@ -5,6 +5,50 @@ This project is a dashboard implementation, featuring interactive data visualiza
 <!-- Live link to the deployment -->
 [**View Live**](https://8-million-stories.vercel.app/)
 
+## Architecture
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                      Client Browser                         │
+└───────────────────────────┬─────────────────────────────────┘
+                            │
+┌───────────────────────────▼─────────────────────────────────┐
+│                       Next.js App                           │
+│  ┌─────────────────┐    ┌─────────────────┐                 │
+│  │     Pages       │    │   Components    │                 │
+│  │                 │    │                 │                 │
+│  │  - Home (/)     │    │  - LineChart    │                 │
+│  │                 │    │  - HeatMap      │                 │
+│  │                 │    │  - Header       │                 │
+│  │                 │    │  - Footer       │                 │
+│  └────────┬────────┘    └────────┬────────┘                 │
+│           │                      │                          │
+│  ┌────────▼──────────────────────▼─────────┐                │
+│  │              Data Fetching              │                │
+│  │                                         │                │
+│  │  - useState for local state             │                │
+│  │  - useEffect for API calls              │                │
+│  │  - Memoization with useMemo             │                │
+│  └────────────────────┬────────────────────┘                │
+└────────────────────────┼────────────────────────────────────┘
+                         │
+┌────────────────────────▼───────────────────────────────────┐
+│                     API Routes                             │
+│                                                            │
+│  - /api/data - Generates random data for visualization     │
+│                                                            │
+└────────────────────────┬───────────────────────────────────┘
+                         │
+┌────────────────────────▼───────────────────────────────────┐
+│                  Vercel Deployment                         │
+│                                                            │
+│  - CI/CD Pipeline                                          │
+│  - Preview Deployments                                     │
+│  - Analytics                                               │
+│                                                            │
+└────────────────────────────────────────────────────────────┘
+
+```
+
 ## Features Implemented
 
 ### Core Components
