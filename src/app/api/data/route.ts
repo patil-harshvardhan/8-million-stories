@@ -17,7 +17,7 @@ export interface DataResponse {
   toYear: number;
   highValue: number;
   fromMonth: number;
-    toMonth: number;
+  toMonth: number;
 }
 
 const randomData = (
@@ -66,23 +66,31 @@ const randomData = (
 };
 
 export async function GET(NextRequest: NextRequest) {
-  const fromYear: number = parseInt(
-    NextRequest.nextUrl.searchParams.get("fromYear") || "2010"
-  );
-  const toYear: number = parseInt(
-    NextRequest.nextUrl.searchParams.get("toYear") || "2015"
-  );
-  const highValue: number = parseInt(
-    NextRequest.nextUrl.searchParams.get("highValue") || "100"
-  );
-  const fromMonth: number = parseInt(
-    NextRequest.nextUrl.searchParams.get("fromMonth") || "1"
-  );
-  const toMonth: number = parseInt(
-    NextRequest.nextUrl.searchParams.get("toMonth") || "12"
-  );
+  try {
+    const fromYear: number = parseInt(
+      NextRequest.nextUrl.searchParams.get("fromYear") || "2010"
+    );
+    const toYear: number = parseInt(
+      NextRequest.nextUrl.searchParams.get("toYear") || "2015"
+    );
+    const highValue: number = parseInt(
+      NextRequest.nextUrl.searchParams.get("highValue") || "100"
+    );
+    const fromMonth: number = parseInt(
+      NextRequest.nextUrl.searchParams.get("fromMonth") || "1"
+    );
+    const toMonth: number = parseInt(
+      NextRequest.nextUrl.searchParams.get("toMonth") || "12"
+    );
 
-  const data = randomData(fromYear, toYear, fromMonth, toMonth, highValue);
+    const data = randomData(fromYear, toYear, fromMonth, toMonth, highValue);
 
-  return NextResponse.json(data);
+    return NextResponse.json(data);
+  } catch (error) {
+    console.error("Error generating random data:", error);
+    return NextResponse.json(
+      { error: "Error generating random data" },
+      { status: 500 }
+    );
+  }
 }
