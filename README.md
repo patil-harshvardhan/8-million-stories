@@ -28,7 +28,7 @@ This project is a dashboard implementation, featuring interactive data visualiza
 │  │  - useState for local state             │                │
 │  │  - useEffect for API calls              │                │
 │  │  - Memoization with useMemo             │                │
-│  └────────────────────┬────────────────────┘                │
+│  └─────────────────────┬───────────────────┘                │
 └────────────────────────┼────────────────────────────────────┘
                          │
 ┌────────────────────────▼───────────────────────────────────┐
