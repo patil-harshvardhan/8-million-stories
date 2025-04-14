@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { DataResponse } from "@/app/api/data/route";
 
 // Dynamically import ApexCharts to avoid SSR issues
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
@@ -18,12 +19,26 @@ export interface HeatmapData {
 }
 
 interface QuarterlyHeatmapProps {
-  heatmapData: HeatmapData[];
+  data: DataResponse;
 }
 
-const QuarterlyHeatmap: React.FC<QuarterlyHeatmapProps> = ({ heatmapData }) => {
+const QuarterlyHeatmap: React.FC<QuarterlyHeatmapProps> = ({ data }) => {
   const [groups, setGroups] = useState<{ title: string; cols: number }[]>([]);
   const [highValue, setHighValue] = useState(0);
+  const [heatmapData, setHeatmapData] = useState<HeatmapData[]>([]);
+
+  const getHeatmapData = (data: DataResponse) => {
+    return data.data.map((brandData) => {
+      const dataPoints = brandData.data.map((point) => ({
+        x: `${point.month} ${point.year}`,
+        y: point.value,
+      }));
+      return {
+        name: brandData.brand,
+        data: dataPoints,
+      };
+    });
+  };
 
   const getGroupsFromData = (data: HeatmapData[]) => {
     const years = new Set<string>(
@@ -43,17 +58,19 @@ const QuarterlyHeatmap: React.FC<QuarterlyHeatmapProps> = ({ heatmapData }) => {
 
   const getHighValueFromData = (data: HeatmapData[]) => {
     const maxValue = Math.max(
-        ...data.flatMap((item) => item.data.map((d) => d.y))
+      ...data.flatMap((item) => item.data.map((d) => d.y))
     );
     return maxValue;
   };
 
   useEffect(() => {
-    const calGroups = getGroupsFromData(heatmapData);
+    const calHeatmapData = getHeatmapData(data);
+    setHeatmapData(calHeatmapData);
+    const calGroups = getGroupsFromData(calHeatmapData);
     setGroups(calGroups);
-    const calHighValue = getHighValueFromData(heatmapData);
+    const calHighValue = getHighValueFromData(calHeatmapData);
     setHighValue(calHighValue);
-  }, [heatmapData]);
+  }, [data]);
 
   const chartOptions: ApexCharts.ApexOptions = {
     chart: {
